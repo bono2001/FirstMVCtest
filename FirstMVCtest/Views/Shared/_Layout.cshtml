@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CollectionBox</title>
+
+    <!-- Bestaande CSS-bestanden -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FirstMVCtest.styles.css" asp-append-version="true" />
+
+    <!-- Voeg aangepaste CSS toe -->
+    <style>
+        /* Zorg dat de body altijd minstens de volledige hoogte gebruikt */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Zorg dat de hoofdcontainer de volledige hoogte gebruikt minus de hoogte van de footer */
+        .container {
+            flex: 1 0 auto; /* Zorg ervoor dat de container flexibel is */
+            padding: 20px;
+            background-color: #ffffff; /* Houd de container wit voor contrast */
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Flexbox voor volledige paginahoogte */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #007bff !important; /* Verander achtergrond naar CollectionBox-blauw */
+        }
+
+        /* Stijlen voor de CollectionBox-tekst */
+        .navbar-brand {
+            color: #007BFF !important; /* Gebruik dezelfde kleur blauw als CollectionBox */
+            font-weight: bold;
+            font-size: 1.8em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Stijlen voor de tabel */
+        table.table {
+            border: 1px solid #007BFF;
+            background-color: white;
+        }
+
+        table th {
+            background-color: #007BFF;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        table td {
+            text-align: center;
+            color: black;
+        }
+
+        /* Koptekst stijl */
+        h1 {
+            color: #007BFF; /* Zelfde blauw als CollectionBox */
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Links */
+        a {
+            color: #007BFF;
+        }
+
+            a:hover {
+                color: #0056b3;
+            }
+
+        /* Actie links stijl (Edit, Details, Delete) */
+        .action-links a {
+            margin-right: 10px;
+            color: #007BFF;
+        }
+
+        /* Specifieke stijlen voor de iconen */
+        .text-success {
+            color: #28a745;
+            font-size: 1.2em;
+        }
+
+        .text-danger {
+            color: #dc3545;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CollectionBox</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Bono">Miel</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action="Index">Items</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Collections" asp-action="Index">Collections</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

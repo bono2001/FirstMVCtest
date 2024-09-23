@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn-custom">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -25,11 +25,49 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn-custom">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn-custom">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn-custom">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<style>
+    .btn-custom {
+        display: inline-block;
+        padding: 6px 12px;
+        margin: 2px;
+        font-size: 14px;
+        font-weight: bold;
+        color: black;
+        background-color: transparent;
+        border: 2px solid black;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-custom:hover {
+        background-color: black;
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-custom:active {
+        background-color: gray;
+    }
+
+    .table {
+        width: 100%;
+        table-layout: auto;
+    }
+
+        .table td, .table th {
+            color: black !important;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+</style>

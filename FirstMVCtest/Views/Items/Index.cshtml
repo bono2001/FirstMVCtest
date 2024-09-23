@@ -53,8 +53,8 @@
                         <td>@(item.Name ?? "N/A")</td>
                         <td>@(item.Description ?? "N/A")</td>
                         <td>@item.Quantity</td>
-                        <td>@item.Price</td>
-                        <td>@item.Value</td>
+                        <td width="100px">€ @item.Price</td>
+                        <td width="100px">€ @item.Value</td>
                         <td>@Html.DisplayFor(modelItem => item.PurchaseDate)</td>
                         <td>@(item.Condition ?? "N/A")</td>
                         <td>@(item.Origin ?? "N/A")</td>
@@ -101,7 +101,6 @@
     </div>
 </div>
 
-<!-- Custom CSS for buttons -->
 <style>
     .btn-custom {
         display: inline-block;

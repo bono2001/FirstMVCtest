@@ -1,28 +1,28 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 .custom-border {
-    border: 2px solid black; 
+    border: 2px solid black;
 }
 
 /* Zorg ervoor dat andere elementen zoals het logo niet worden beïnvloed */
@@ -50,7 +50,6 @@ body {
         color: white !important;
     }
 
-
 /* Voor alle primaire knoppen zoals "Sort" */
 .btn-primary.custom-border {
     border: 2px solid black; /* Zwarte rand van 2px */
@@ -66,7 +65,6 @@ body {
         border-color: black; /* Zorg ervoor dat de rand zwart blijft */
     }
 
-
 /* Zorgt ervoor dat alle btn-primary knoppen een zwarte rand krijgen */
 .btn-primary {
     border: 2px solid black !important; /* 2px zwarte rand */
@@ -78,8 +76,77 @@ body {
         color: white !important;
     }
 
-
+/* Tabel header styling */
 .table th {
     color: black !important; /* Zorgt ervoor dat de tekstkleur zwart wordt */
     background-color: white; /* Zorg ervoor dat de achtergrond wit is of verander naar gewenste kleur */
+}
+
+/* Box voor CollectionBox pagina */
+.centered-box {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+    background: white;
+    border-radius: 12px; /* Zorg ervoor dat het binnenste witte gedeelte afgeronde hoeken heeft */
+    z-index: 1;
+    text-align: center; /* Centraal uitlijnen van de inhoud */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Lichte schaduw voor een zwevend effect */
+}
+
+
+/* Logo afbeelding centreren */
+.centered-image {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Styling van het h1 element */
+h1.display-4 {
+    font-weight: bold;
+    color: #007bff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Styling voor paragraaf */
+p {
+    font-size: 1.25rem;
+    color: #6c757d;
+    animation: fadeIn 2s ease-in-out;
+}
+
+/* Bounce animatie voor de My Items knop */
+.btn-primary {
+    animation: bounceIn 2.5s ease-in-out;
+}
+
+/* Animaties */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }

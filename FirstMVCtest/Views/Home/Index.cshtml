@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container py-5" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); text-align: center;">
+<div class="centered-box">
     <!-- Afbeelding van Kaledoos -->
     <img src="~/IMG/Kaledoos.png" alt="Kaledoos Logo" style="max-width: 200px; height: auto; margin-bottom: 20px;" />
 
@@ -16,6 +16,7 @@
     <a asp-controller="Items" asp-action="Index" class="btn btn-primary btn-lg mt-3" style="animation: bounceIn 2.5s ease-in-out;">My Items</a>
 </div>
 
+
 <!-- Custom CSS for animations and shadow -->
 <style>
     .container {
@@ -23,6 +24,7 @@
         margin: 0 auto;
         padding: 40px;
         background-color: #66b3ff;
+        position: relative;
     }
 
     @@keyframes fadeIn {

@@ -2,31 +2,51 @@
 
 @{
     ViewData["Title"] = "Item";
+
+
+
+    // Bereken het totale aantal items en de totale prijs
+
+    var totalItems = Model.Count();
+
+    var totalPrice = Model.Sum(item => item.Price);
 }
 
 <div style="display: flex; flex-direction: column; min-height: 100vh;">
+    <!-- Header met logo en titel linksboven -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center;">
+            <img src="~/IMG/Kaledoos.png" alt="Logo" style="width: 80px; height: auto; margin-right: 15px;" />
+            <h1 style="margin: 0;">Your Items</h1>
+        </div>
+        <div style="text-align: right;">
+            <p style="font-size: 18px; margin: 0;"><strong>Total Items:</strong> @totalItems</p>
+            <p style="font-size: 18px; margin: 0;"><strong>Total Price:</strong> € @totalPrice</p>
+        </div>
+    </div>
+
     <!-- Content section -->
     <div style="flex-grow: 1;">
-        <h1>Your Items</h1>
-
         <!-- Dropdown form for sorting -->
-        <form asp-action="Index" method="get">
-            <label for="sortOrder">Sort by:</label>
-            <select id="sortOrder" name="sortOrder" class="form-control" style="display: inline-block; width: auto;">
-                <option value="name_asc" selected>Sort by Name (A-Z)</option>
-                <option value="name_desc">Sort by Name (Z-A)</option>
-                <option value="price_asc">Sort by Price (Low to High)</option>
-                <option value="price_desc">Sort by Price (High to Low)</option>
-                <option value="date_asc">Sort by Purchase Date (Oldest First)</option>
-                <option value="date_desc">Sort by Purchase Date (Newest First)</option>
-                <option value="category_asc">Sort by Category (A-Z)</option>
-                <option value="category_desc">Sort by Category (Z-A)</option>
-            </select>
-            <input type="submit" value="Sort" class="btn btn-primary" />
-        </form>
+        <div style="text-align: left; margin-bottom: 20px;">
+            <form asp-action="Index" method="get" style="display: inline-block;">
+                <label for="sortOrder">Sort by:</label>
+                <select id="sortOrder" name="sortOrder" class="form-control" style="display: inline-block; width: auto;">
+                    <option value="name_asc" selected>Sort by Name (A-Z)</option>
+                    <option value="name_desc">Sort by Name (Z-A)</option>
+                    <option value="price_asc">Sort by Price (Low to High)</option>
+                    <option value="price_desc">Sort by Price (High to Low)</option>
+                    <option value="date_asc">Sort by Purchase Date (Oldest First)</option>
+                    <option value="date_desc">Sort by Purchase Date (Newest First)</option>
+                    <option value="category_asc">Sort by Category (A-Z)</option>
+                    <option value="category_desc">Sort by Category (Z-A)</option>
+                </select>
+                <input type="submit" value="Sort" class="btn btn-primary custom-border" />
+            </form>
+        </div>
 
         <p>
-            <a asp-action="Create" class="btn-custom">Create New</a>
+            <a asp-action="Create" class="btn-custom">Add New Item</a>
         </p>
 
         <table class="table table-striped table-bordered">
@@ -48,10 +68,11 @@
             </thead>
             <tbody>
                 @foreach (var item in Model)
+
                 {
                     <tr>
                         <td>@(item.Name ?? "N/A")</td>
-                        <td>@(item.Description ?? "N/A")</td>
+                        <td>@item.Description</td>
                         <td>@item.Quantity</td>
                         <td width="100px">€ @item.Price</td>
                         <td width="100px">€ @item.Value</td>
@@ -60,28 +81,38 @@
                         <td>@(item.Origin ?? "N/A")</td>
                         <td>
                             @if (item.ForSale.HasValue && item.ForSale.Value)
+
                             {
                                 <span class="text-success">&#10004;</span>
                             }
+
                             else if (item.ForSale.HasValue && !item.ForSale.Value)
+
                             {
                                 <span class="text-danger">&#10060;</span>
                             }
+
                             else
+
                             {
                                 <span class="text-muted">N/A</span>
                             }
                         </td>
                         <td>
                             @if (item.ForTrade.HasValue && item.ForTrade.Value)
+
                             {
                                 <span class="text-success">&#10004;</span>
                             }
+
                             else if (item.ForTrade.HasValue && !item.ForTrade.Value)
+
                             {
                                 <span class="text-danger">&#10060;</span>
                             }
+
                             else
+
                             {
                                 <span class="text-muted">N/A</span>
                             }
@@ -100,40 +131,3 @@
         </table>
     </div>
 </div>
-
-<style>
-    .btn-custom {
-        display: inline-block;
-        padding: 6px 12px;
-        margin: 2px;
-        font-size: 14px;
-        font-weight: bold;
-        color: black;
-        background-color: transparent;
-        border: 2px solid black;
-        text-decoration: none;
-        border-radius: 4px;
-        transition: all 0.3s ease-in-out;
-    }
-
-        .btn-custom:hover {
-            background-color: black;
-            color: white;
-            text-decoration: none;
-        }
-
-        .btn-custom:active {
-            background-color: gray;
-        }
-
-    .table {
-        width: 100%;
-        table-layout: auto;
-    }
-
-        .table td, .table th {
-            color: black !important;
-            text-align: center;
-            vertical-align: middle;
-        }
-</style>

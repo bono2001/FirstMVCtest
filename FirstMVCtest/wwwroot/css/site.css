@@ -21,3 +21,59 @@ body {
   margin-bottom: 60px;
 }
 
+.custom-border {
+    border: 2px solid black; 
+}
+
+/* Zorg ervoor dat andere elementen zoals het logo niet worden beïnvloed */
+.navbar-brand {
+    border: none; /* Verwijder rand rond het logo */
+}
+
+.btn-custom {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 2px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white !important;
+    background-color: #007bff !important;
+    border: 2px solid black !important;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
+}
+
+    .btn-custom:hover {
+        background-color: black !important;
+        color: white !important;
+    }
+
+
+/* Voor alle primaire knoppen zoals "Sort" */
+.btn-primary.custom-border {
+    border: 2px solid black; /* Zwarte rand van 2px */
+    background-color: #007bff; /* Standaard blauwe achtergrond */
+    color: white; /* Witte tekst */
+}
+
+    /* Als je over de knop hovert, verander naar zwarte achtergrond met witte tekst */
+    .btn-primary.custom-border:hover {
+        background-color: black; /* Zwarte achtergrond bij hover */
+        color: white; /* Witte tekst bij hover */
+        border-color: black; /* Zorg ervoor dat de rand zwart blijft */
+    }
+
+
+/* Zorgt ervoor dat alle btn-primary knoppen een zwarte rand krijgen */
+.btn-primary {
+    border: 2px solid black !important; /* 2px zwarte rand */
+    transition: all 0.3s ease-in-out;
+}
+
+    .btn-primary:hover {
+        background-color: black !important; /* Zorgt ervoor dat de knop zwart wordt bij hover */
+        color: white !important;
+    }
+
+

@@ -17,14 +17,4 @@
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.5" />
 	</ItemGroup>
 
-
-	<ItemGroup>
-	  <Folder Include="wwwroot\IMG\" />
-	</ItemGroup>
-
-
-	<ItemGroup>
-	  <None Include="wwwroot\IMG\Kaledoos.png" />
-	</ItemGroup>
-
 </Project>

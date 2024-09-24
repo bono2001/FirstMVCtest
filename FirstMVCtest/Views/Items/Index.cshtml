@@ -3,25 +3,23 @@
 @{
     ViewData["Title"] = "Item";
 
-
-
     // Bereken het totale aantal items en de totale prijs
-
     var totalItems = Model.Count();
-
-    var totalPrice = Model.Sum(item => item.Price);
+    var totalPrice = Model.Sum(item => item.Price ?? 0);
 }
 
 <div style="display: flex; flex-direction: column; min-height: 100vh;">
-    <!-- Header met logo en titel linksboven -->
+    <!-- Header met logo, titel linksboven, en totalen rechts in een kader -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <div style="display: flex; align-items: center;">
             <img src="~/IMG/Kaledoos.png" alt="Logo" style="width: 80px; height: auto; margin-right: 15px;" />
             <h1 style="margin: 0;">Your Items</h1>
         </div>
-        <div style="text-align: right;">
-            <p style="font-size: 18px; margin: 0;"><strong>Total Items:</strong> @totalItems</p>
-            <p style="font-size: 18px; margin: 0;"><strong>Total Price:</strong> € @totalPrice</p>
+
+        <!-- Totalen in een kader -->
+        <div class="total-summary">
+            <p><strong>Total Items:</strong> @totalItems</p>
+            <p><strong>Total Price:</strong> € @totalPrice</p>
         </div>
     </div>
 
@@ -68,7 +66,6 @@
             </thead>
             <tbody>
                 @foreach (var item in Model)
-
                 {
                     <tr>
                         <td>@(item.Name ?? "N/A")</td>
@@ -81,38 +78,28 @@
                         <td>@(item.Origin ?? "N/A")</td>
                         <td>
                             @if (item.ForSale.HasValue && item.ForSale.Value)
-
                             {
                                 <span class="text-success">&#10004;</span>
                             }
-
                             else if (item.ForSale.HasValue && !item.ForSale.Value)
-
                             {
                                 <span class="text-danger">&#10060;</span>
                             }
-
                             else
-
                             {
                                 <span class="text-muted">N/A</span>
                             }
                         </td>
                         <td>
                             @if (item.ForTrade.HasValue && item.ForTrade.Value)
-
                             {
                                 <span class="text-success">&#10004;</span>
                             }
-
                             else if (item.ForTrade.HasValue && !item.ForTrade.Value)
-
                             {
                                 <span class="text-danger">&#10060;</span>
                             }
-
                             else
-
                             {
                                 <span class="text-muted">N/A</span>
                             }
@@ -131,3 +118,23 @@
         </table>
     </div>
 </div>
+
+<!-- CSS for Total Summary -->
+<style>
+    .total-summary {
+        background-color: #007bff; /* Blauwe achtergrond */
+        padding: 15px;
+        border-radius: 8px;
+        border: 2px solid black; /* Zwarte border toegevoegd */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Zacht schaduw effect */
+        text-align: right;
+        font-size: 1.1rem;
+    }
+
+        .total-summary p {
+            margin: 0; /* Geen ruimte tussen de paragrafen */
+            font-weight: bold;
+            color: #ffffff; /* Witte tekstkleur */
+            text-shadow: 1px 1px 2px black; /* Zwart randje rond de tekst */
+        }
+</style>

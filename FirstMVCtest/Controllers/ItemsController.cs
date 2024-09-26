@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FirstMVCtest.Data;
 using FirstMVCtest.Models;
@@ -18,7 +17,6 @@ namespace FirstMVCtest.Controllers
         {
             _context = context;
         }
-
 
         // GET: Items
         public async Task<IActionResult> Index(string sortOrder)
@@ -64,10 +62,6 @@ namespace FirstMVCtest.Controllers
             return View(items);
         }
 
-
-
-
-
         // GET: Items/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -89,35 +83,33 @@ namespace FirstMVCtest.Controllers
         // GET: Items/Create
         public IActionResult Create()
         {
-            // Haal alle categorieën op en geef ze door aan de view
-            ViewBag.Categories = _context.Categories.ToList();
-            return View();
+            var viewModel = new ItemEditViewModel
+            {
+                Item = new Item(),
+                Categories = _context.Categories.ToList(),
+                SelectedCategoryIds = new List<int>() // Lege lijst voor nieuwe items
+            };
+
+            return View(viewModel);
         }
 
-
-
-
-
         // POST: Items/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Item item, int[] SelectedCategories)
+        public async Task<IActionResult> Create(ItemEditViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                // Voeg het item toe aan de database
-                _context.Add(item);
+                _context.Add(viewModel.Item);
                 await _context.SaveChangesAsync();
 
                 // Voeg de geselecteerde categorieën toe aan het item
-                foreach (var categoryId in SelectedCategories)
+                foreach (var categoryId in viewModel.SelectedCategoryIds)
                 {
                     var category = await _context.Categories.FindAsync(categoryId);
                     if (category != null)
                     {
-                        item.Categories.Add(category);
+                        viewModel.Item.Categories.Add(category);
                     }
                 }
 
@@ -126,11 +118,9 @@ namespace FirstMVCtest.Controllers
             }
 
             // Als het formulier niet valide is, laad de categorieën opnieuw
-            ViewBag.Categories = _context.Categories.ToList();
-            return View(item);
+            viewModel.Categories = _context.Categories.ToList();
+            return View(viewModel);
         }
-
-
 
         // GET: Items/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -149,21 +139,22 @@ namespace FirstMVCtest.Controllers
                 return NotFound();
             }
 
-            // Haal alle categorieën op en geef ze door aan de view
-            ViewBag.Categories = _context.Categories.ToList();
-            ViewBag.SelectedCategories = item.Categories.Select(c => c.Id).ToArray();  // Haal de geselecteerde categorieën op
+            var viewModel = new ItemEditViewModel
+            {
+                Item = item,
+                Categories = _context.Categories.ToList(),
+                SelectedCategoryIds = item.Categories.Select(c => c.Id).ToList() // Haal de geselecteerde categorieën op
+            };
 
-            return View(item);
+            return View(viewModel);
         }
 
-
-
-
+        // POST: Items/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Item item, int[] SelectedCategories)
+        public async Task<IActionResult> Edit(int id, ItemEditViewModel viewModel)
         {
-            if (id != item.Id)
+            if (id != viewModel.Item.Id)
             {
                 return NotFound();
             }
@@ -172,8 +163,9 @@ namespace FirstMVCtest.Controllers
             {
                 try
                 {
-                    // Update het item
-                    _context.Update(item);
+                    // Update het item in de database
+                    _context.Update(viewModel.Item);
+                    await _context.SaveChangesAsync();
 
                     // Haal het bestaande item op inclusief categorieën
                     var existingItem = await _context.Items
@@ -182,11 +174,11 @@ namespace FirstMVCtest.Controllers
 
                     if (existingItem != null)
                     {
-                        // Verwijder alle bestaande categorieën
+                        // Verwijder de bestaande categorieën
                         existingItem.Categories.Clear();
 
                         // Voeg de nieuw geselecteerde categorieën toe
-                        foreach (var categoryId in SelectedCategories)
+                        foreach (var categoryId in viewModel.SelectedCategoryIds)
                         {
                             var category = await _context.Categories.FindAsync(categoryId);
                             if (category != null)
@@ -195,13 +187,12 @@ namespace FirstMVCtest.Controllers
                             }
                         }
 
-                        // Sla de wijzigingen op
                         await _context.SaveChangesAsync();
                     }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.Id))
+                    if (!ItemExists(viewModel.Item.Id))
                     {
                         return NotFound();
                     }
@@ -214,13 +205,9 @@ namespace FirstMVCtest.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Categories = _context.Categories.ToList();
-            ViewBag.SelectedCategories = SelectedCategories;
-            return View(item);
+            viewModel.Categories = _context.Categories.ToList();
+            return View(viewModel);
         }
-
-
-
 
         // GET: Items/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -259,30 +246,5 @@ namespace FirstMVCtest.Controllers
         {
             return _context.Items.Any(e => e.Id == id);
         }
-
-
-
-        // Voeg de AddCategoryToItem-methode toe
-        public async Task<IActionResult> AddCategoryToItem(int itemId, int categoryId)
-        {
-            // Haal het item en de categorie uit de database
-            var item = await _context.Items.Include(i => i.Categories).FirstOrDefaultAsync(i => i.Id == itemId);
-            var category = await _context.Categories.FindAsync(categoryId);
-
-            if (item == null || category == null)
-            {
-                return NotFound();
-            }
-
-            // Voeg de categorie toe aan het item (als deze nog niet is toegevoegd)
-            if (!item.Categories.Contains(category))
-            {
-                item.Categories.Add(category);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToAction(nameof(Index)); // Terug naar de lijst met items
-        }
-
     }
 }

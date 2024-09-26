@@ -1,94 +1,116 @@
-﻿@model FirstMVCtest.Models.Item
+﻿@model FirstMVCtest.Models.ItemEditViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Item";
 }
 
-<h1>Create</h1>
+<h1>Create Item</h1>
 
-<h4>Item</h4>
 <hr />
+
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Name -->
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Item.Name" class="control-label"></label>
+                <input asp-for="Item.Name" class="form-control" />
+                <span asp-validation-for="Item.Name" class="text-danger"></span>
             </div>
+
+            <!-- Description -->
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Item.Description" class="control-label"></label>
+                <input asp-for="Item.Description" class="form-control" />
+                <span asp-validation-for="Item.Description" class="text-danger"></span>
             </div>
+
+            <!-- Quantity -->
             <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
+                <label asp-for="Item.Quantity" class="control-label"></label>
+                <input asp-for="Item.Quantity" class="form-control" />
+                <span asp-validation-for="Item.Quantity" class="text-danger"></span>
             </div>
+
+            <!-- Price -->
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+                <label asp-for="Item.Price" class="control-label"></label>
+                <input asp-for="Item.Price" class="form-control" />
+                <span asp-validation-for="Item.Price" class="text-danger"></span>
             </div>
+
+            <!-- Value -->
             <div class="form-group">
-                <label asp-for="Value" class="control-label"></label>
-                <input asp-for="Value" class="form-control" />
-                <span asp-validation-for="Value" class="text-danger"></span>
+                <label asp-for="Item.Value" class="control-label"></label>
+                <input asp-for="Item.Value" class="form-control" />
+                <span asp-validation-for="Item.Value" class="text-danger"></span>
             </div>
+
+            <!-- Purchase Date -->
             <div class="form-group">
-                <label asp-for="PurchaseDate" class="control-label"></label>
-                <input asp-for="PurchaseDate" class="form-control" type="date" />
-                <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+                <label asp-for="Item.PurchaseDate" class="control-label"></label>
+                <input asp-for="Item.PurchaseDate" class="form-control" type="date" />
+                <span asp-validation-for="Item.PurchaseDate" class="text-danger"></span>
             </div>
+
+            <!-- Condition -->
             <div class="form-group">
-                <label asp-for="Condition" class="control-label"></label>
-                <select asp-for="Condition" class="form-control">
+                <label asp-for="Item.Condition" class="control-label"></label>
+                <select asp-for="Item.Condition" class="form-control">
                     <option value="New">New</option>
                     <option value="Good">Good</option>
                     <option value="Refurbished">Refurbished</option>
                     <option value="Used">Used</option>
                     <option value="Broken">Broken</option>
                 </select>
-                <span asp-validation-for="Condition" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Origin" class="control-label"></label>
-                <input asp-for="Origin" class="form-control" />
-                <span asp-validation-for="Origin" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ForSale"></label>
-                <select asp-for="ForSale" class="form-control">
-                    <option value="true">True</option>
-                    <option value="false">False</option>
-                </select>
-                <span asp-validation-for="ForSale" class="text-danger"></span>
+                <span asp-validation-for="Item.Condition" class="text-danger"></span>
             </div>
 
+            <!-- Origin -->
             <div class="form-group">
-                <label asp-for="ForTrade"></label>
-                <select asp-for="ForTrade" class="form-control">
-                    <option value="true">True</option>
-                    <option value="false">False</option>
-                </select>
-                <span asp-validation-for="ForTrade" class="text-danger"></span>
+                <label asp-for="Item.Origin" class="control-label"></label>
+                <input asp-for="Item.Origin" class="form-control" />
+                <span asp-validation-for="Item.Origin" class="text-danger"></span>
             </div>
 
-            <!-- Voeg het formulier voor categorieën hier toe -->
+            <!-- For Sale -->
             <div class="form-group">
-                <label for="SelectedCategories">Categories</label>
-                <select id="SelectedCategories" name="SelectedCategories" class="form-control" multiple="multiple">
-                    @foreach (var category in ViewBag.Categories)
+                <label asp-for="Item.ForSale" class="control-label"></label>
+                <select asp-for="Item.ForSale" class="form-control">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <span asp-validation-for="Item.ForSale" class="text-danger"></span>
+            </div>
+
+            <!-- For Trade -->
+            <div class="form-group">
+                <label asp-for="Item.ForTrade" class="control-label"></label>
+                <select asp-for="Item.ForTrade" class="form-control">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <span asp-validation-for="Item.ForTrade" class="text-danger"></span>
+            </div>
+
+            <!-- Categories (Checkboxes) -->
+            <div class="form-group">
+                <label for="Categories">Categories</label>
+                <div>
+                    @foreach (var category in Model.Categories)
                     {
-                        <option value="@category.Id">@category.Name</option>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="@category.Id" name="SelectedCategoryIds"
+                            @(Model.SelectedCategoryIds.Contains(category.Id) ? "checked" : "") />
+                            <label class="form-check-label">@category.Name</label>
+                        </div>
                     }
-                </select>
+                </div>
             </div>
 
-
-
+            <!-- Submit Button -->
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -97,11 +119,9 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

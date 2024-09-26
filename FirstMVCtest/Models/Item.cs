@@ -23,11 +23,7 @@ namespace FirstMVCtest.Models
         public bool? ForSale { get; set; }
         public bool? ForTrade { get; set; }
 
-        // Foreign key naar de Category
-        public int CategoryId { get; set; }
-
-        // navigatie-eigenschap: het item hoort bij een Category
-        public virtual Category? Category { get; set; } = null!;
+        public List<Category> Categories { get; set; } = new List<Category>();
 
     }
 }

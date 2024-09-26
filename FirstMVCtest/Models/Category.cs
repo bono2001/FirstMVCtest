@@ -18,8 +18,7 @@ namespace FirstMVCtest.Models
         // navigatie-eigenschap: de categorie hoort bij een Collection
         public Collection? Collection { get; set; }
 
-        // navigatie-eigenschap: een categorie heeft meerdere items
-        public ICollection<Item>? Items { get; set; }
+        public List<Item> Items { get; set; } = new List<Item>();
 
     }
 }

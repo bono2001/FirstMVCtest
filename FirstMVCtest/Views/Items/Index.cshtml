@@ -60,7 +60,7 @@
                     <th>@Html.DisplayNameFor(model => model.Origin)</th>
                     <th>@Html.DisplayNameFor(model => model.ForSale)</th>
                     <th>@Html.DisplayNameFor(model => model.ForTrade)</th>
-                    <th>@Html.DisplayNameFor(model => model.Category)</th>
+                    <th>@Html.DisplayName("Categories")</th>
                     <th style="width: 200px;">Actions</th>
                 </tr>
             </thead>
@@ -104,7 +104,17 @@
                                 <span class="text-muted">N/A</span>
                             }
                         </td>
-                        <td>@(item.Category?.Name ?? "N/A")</td>
+                        <!-- Categorieën kolom -->
+                        <td>
+                            @if (item.Categories != null && item.Categories.Any())
+                            {
+                                @string.Join(", ", item.Categories.Select(c => c.Name))
+                            }
+                            else
+                            {
+                                <span class="text-muted">No Categories</span>
+                            }
+                        </td>
                         <td>
                             <div class="btn-group" role="group">
                                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn-custom">Edit</a>
@@ -118,23 +128,3 @@
         </table>
     </div>
 </div>
-
-<!-- CSS for Total Summary -->
-<style>
-    .total-summary {
-        background-color: #007bff; /* Blauwe achtergrond */
-        padding: 15px;
-        border-radius: 8px;
-        border: 2px solid black; /* Zwarte border toegevoegd */
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Zacht schaduw effect */
-        text-align: right;
-        font-size: 1.1rem;
-    }
-
-        .total-summary p {
-            margin: 0; /* Geen ruimte tussen de paragrafen */
-            font-weight: bold;
-            color: #ffffff; /* Witte tekstkleur */
-            text-shadow: 1px 1px 2px black; /* Zwart randje rond de tekst */
-        }
-</style>

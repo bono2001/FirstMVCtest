@@ -28,11 +28,10 @@ namespace FirstMVCtest.Data
                 .WithMany(c => c.Categories)
                 .HasForeignKey(c => c.CollectionId);
 
-            // Category to Item (one-to-many)
+            // Category to Item (many-to-many)
             modelBuilder.Entity<Item>()
-                .HasOne(i => i.Category)
-                .WithMany(c => c.Items)
-                .HasForeignKey(i => i.CategoryId);
+                .HasMany(c => c.Categories)
+                .WithMany(c => c.Items);
         }
 
 

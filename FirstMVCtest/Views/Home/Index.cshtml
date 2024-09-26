@@ -2,15 +2,19 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="centered-box">
+<div class="centered-box" style="position: relative;">
+    <div class="centered-box-background" ></div>
     <!-- Afbeelding van Kaledoos -->
-    <img src="~/IMG/Kaledoos.png" alt="Kaledoos Logo" style="max-width: 200px; height: auto; margin-bottom: 20px;" />
+    <div style="z-index: 3">
 
-    <h1 class="display-4" style="font-weight: bold; color: #007bff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); animation: fadeIn 1.5s ease-in-out;">CollectionBox</h1>
-    <p style="font-size: 1.25rem; color: #6c757d; animation: fadeIn 2s ease-in-out;">
-        Welcome to <span style="font-weight: bold; color: #007bff;">CollectionBox</span>,
-        the perfect app to keep track of all your collections.
-    </p>
+        <img src="~/IMG/Kaledoos.png" alt="Kaledoos Logo" style="max-width: 200px; height: auto; margin-bottom: 20px;" />
+
+        <h1 class="display-4" style="font-weight: bold; color: #007bff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); animation: fadeIn 1.5s ease-in-out;">CollectionBox</h1>
+        <p style="font-size: 1.25rem; color: #6c757d; animation: fadeIn 2s ease-in-out;">
+            Welcome to <span style="font-weight: bold; color: #007bff;">CollectionBox</span>,
+            the perfect app to keep track of all your collections.
+        </p>
+    </div>
 
     <!-- Verwijst naar de Items pagina -->
     <a asp-controller="Items" asp-action="Index" class="btn btn-primary btn-lg mt-3" style="animation: bounceIn 2.5s ease-in-out;">My Items</a>

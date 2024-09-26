@@ -88,11 +88,33 @@ body {
     max-width: 600px;
     margin: 0 auto;
     padding: 40px;
+/*    animation: spin 3s linear infinite;*/
+    background: linear-gradient(90deg, #0057e7, #2E82F4, #66C3FF, #7AF3FF, #4FADFA, #2E82F4, #0057e7);
+    border-radius: 12px;
+    z-index: 2;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.centered-box-background {
+    content: '';
+    position: absolute;
+    height: 95%;
+    width: 95%;
     background: white;
-    border-radius: 12px; /* Zorg ervoor dat het binnenste witte gedeelte afgeronde hoeken heeft */
-    z-index: 1;
-    text-align: center; /* Centraal uitlijnen van de inhoud */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Lichte schaduw voor een zwevend effect */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1; /* Blijft achter de box */
 }
 
 

@@ -172,3 +172,10 @@ p {
         opacity: 1;
     }
 }
+
+/* Schakel animatie uit voor actieknoppen */
+.btn-action {
+    animation: none !important; /* Verwijdert elke animatie */
+    transition: none !important; /* Verwijdert de overgangseffecten */
+}
+

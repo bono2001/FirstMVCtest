@@ -22,8 +22,12 @@ namespace FirstMVCtest.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            var itemDb = _context.Categories.Include(c => c.Collection);
-            return View(await itemDb.ToListAsync());
+            var categoriesWithItems = await _context.Categories
+                .Include(c => c.Items)  // Haal de items van elke categorie op
+                .Include(c => c.Collection)
+                .ToListAsync();
+
+            return View(categoriesWithItems);  // Stuur de lijst van categorieën met hun items naar de view
         }
 
         // GET: Categories/Details/5
@@ -35,15 +39,18 @@ namespace FirstMVCtest.Controllers
             }
 
             var category = await _context.Categories
+                .Include(c => c.Items)  // Zorg dat de items ook worden opgehaald
                 .Include(c => c.Collection)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (category == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(category);  // Geef de categorie door aan de view, inclusief items
         }
+
 
         // GET: Categories/Create
         public IActionResult Create()
@@ -53,8 +60,6 @@ namespace FirstMVCtest.Controllers
         }
 
         // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,CollectionId")] Category category)
@@ -87,8 +92,6 @@ namespace FirstMVCtest.Controllers
         }
 
         // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CollectionId")] Category category)

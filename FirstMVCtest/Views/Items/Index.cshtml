@@ -16,8 +16,10 @@
             <h1 style="margin: 0;">Your Items</h1>
         </div>
 
-        <!-- Totalen in een kader -->
-        <div class="total-summary">
+        <!-- Totalen in een mooi kader -->
+        <div class="total-summary custom-border">
+            <p class="summary-title">Summary</p>
+            <hr class="summary-line">
             <p><strong>Total Items:</strong> @totalItems</p>
             <p><strong>Total Price:</strong> € @totalPrice</p>
         </div>
@@ -44,7 +46,7 @@
         </div>
 
         <p>
-            <a asp-action="Create" class="btn-custom">Add New Item</a>
+            <a asp-action="Create" class="btn btn-primary custom-border">Add New Item</a>
         </p>
 
         <table class="table table-striped table-bordered">
@@ -117,9 +119,9 @@
                         </td>
                         <td>
                             <div class="btn-group" role="group">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn-custom">Edit</a>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn-custom">Details</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn-custom">Delete</a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-custom">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-custom">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-custom">Delete</a>
                             </div>
                         </td>
                     </tr>
@@ -128,3 +130,36 @@
         </table>
     </div>
 </div>
+
+<!-- CSS for Total Summary -->
+<style>
+    .total-summary {
+        background-color: #007bff; /* Blauwe achtergrond */
+        padding: 15px;
+        border-radius: 8px;
+        border: 2px solid black; /* Zwarte border toegevoegd */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Zacht schaduw effect */
+        text-align: right;
+        font-size: 1.1rem;
+    }
+
+        .total-summary p {
+            margin: 0; /* Geen ruimte tussen de paragrafen */
+            font-weight: bold;
+            color: #ffffff; /* Witte tekstkleur */
+            text-shadow: 1px 1px 2px black; /* Zwart randje rond de tekst */
+        }
+
+    .summary-title {
+        margin: 0;
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: white;
+    }
+
+    .summary-line {
+        margin: 8px 0;
+        border: 0;
+        border-top: 1px solid white;
+    }
+</style>

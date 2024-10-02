@@ -179,3 +179,33 @@ p {
     transition: none !important; /* Verwijdert de overgangseffecten */
 }
 
+.total-summary {
+    background-color: #007bff; /* Blauwe achtergrond */
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid black; /* Zwarte border toegevoegd */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Zacht schaduw effect */
+    text-align: right;
+    font-size: 1.1rem;
+    color: white; /* Zorg ervoor dat de tekst wit is */
+}
+
+    .total-summary p {
+        margin: 0; /* Geen ruimte tussen de paragrafen */
+        font-weight: bold;
+        color: white; /* Witte tekstkleur */
+        text-shadow: 1px 1px 2px black; /* Zwart randje rond de tekst */
+    }
+
+.summary-title {
+    margin: 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: white; /* Witte titeltekst */
+}
+
+.summary-line {
+    margin: 8px 0;
+    border: 0;
+    border-top: 1px solid white; /* Witte lijn tussen de titel en de inhoud */
+}

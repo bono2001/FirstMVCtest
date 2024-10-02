@@ -20,7 +20,7 @@ namespace FirstMVCtest.Controllers
         }
 
         // GET: Items
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
             // Voeg de verschillende sorteermogelijkheden toe aan de ViewBag
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -28,40 +28,52 @@ namespace FirstMVCtest.Controllers
             ViewBag.DateSortParm = sortOrder == "date_asc" ? "date_desc" : "date_asc";
             ViewBag.CategorySortParm = sortOrder == "category_asc" ? "category_desc" : "category_asc";
 
+            // Voeg de huidige zoekterm toe aan de ViewBag zodat deze in het formulier behouden blijft
+            ViewBag.CurrentFilter = searchString;
+
             // Haal de items op uit de database en include de categorieën
-            var items = await _context.Items.Include(i => i.Categories).ToListAsync();
+            var items = from i in _context.Items.Include(i => i.Categories)
+                        select i;
+
+            // Als er een zoekterm is ingevoerd, filter de items op naam
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                items = items.Where(s => s.Name.Contains(searchString));
+            }
 
             // Pas sortering toe op basis van de geselecteerde waarde in de dropdown
             switch (sortOrder)
             {
                 case "name_desc":
-                    items = items.OrderByDescending(i => i.Name).ToList();
+                    items = items.OrderByDescending(i => i.Name);
                     break;
                 case "price_asc":
-                    items = items.OrderBy(i => i.Price).ToList();
+                    items = items.OrderBy(i => i.Price);
                     break;
                 case "price_desc":
-                    items = items.OrderByDescending(i => i.Price).ToList();
+                    items = items.OrderByDescending(i => i.Price);
                     break;
                 case "date_asc":
-                    items = items.OrderBy(i => i.PurchaseDate).ToList();
+                    items = items.OrderBy(i => i.PurchaseDate);
                     break;
                 case "date_desc":
-                    items = items.OrderByDescending(i => i.PurchaseDate).ToList();
+                    items = items.OrderByDescending(i => i.PurchaseDate);
                     break;
                 case "category_asc":
-                    items = items.OrderBy(i => i.Categories.Select(c => c.Name).FirstOrDefault()).ToList(); // Sorteren op eerste categorie
+                    items = items.OrderBy(i => i.Categories.Select(c => c.Name).FirstOrDefault());
                     break;
                 case "category_desc":
-                    items = items.OrderByDescending(i => i.Categories.Select(c => c.Name).FirstOrDefault()).ToList(); // Omgekeerde sortering
+                    items = items.OrderByDescending(i => i.Categories.Select(c => c.Name).FirstOrDefault());
                     break;
                 default:
-                    items = items.OrderBy(i => i.Name).ToList(); // Standaard sorteren op naam (A-Z)
+                    items = items.OrderBy(i => i.Name);
                     break;
             }
 
-            return View(items);
+            return View(await items.AsNoTracking().ToListAsync());
         }
+
+
 
         // GET: Items/Details/5
         public async Task<IActionResult> Details(int? id)

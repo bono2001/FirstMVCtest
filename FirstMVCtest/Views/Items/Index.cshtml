@@ -27,150 +27,119 @@
         </div>
     </div>
 
-    <!-- Content section -->
-    <div style="flex-grow: 1;">
-        <!-- Dropdown form for sorting -->
-        <div style="text-align: left; margin-bottom: 20px;">
-            <form asp-action="Index" method="get" style="display: inline-block;">
-                <label for="sortOrder">Sort by:</label>
-                <select id="sortOrder" name="sortOrder" class="form-control" style="display: inline-block; width: auto;">
-                    <option value="name_asc" selected>Sort by Name (A-Z)</option>
-                    <option value="name_desc">Sort by Name (Z-A)</option>
-                    <option value="price_asc">Sort by Price (Low to High)</option>
-                    <option value="price_desc">Sort by Price (High to Low)</option>
-                    <option value="date_asc">Sort by Purchase Date (Oldest First)</option>
-                    <option value="date_desc">Sort by Purchase Date (Newest First)</option>
-                    <option value="category_asc">Sort by Category (A-Z)</option>
-                    <option value="category_desc">Sort by Category (Z-A)</option>
-                </select>
-                <input type="submit" value="Sort" class="btn btn-primary custom-border" />
-            </form>
-        </div>
-
-        <p>
-            <a asp-action="Create" class="btn btn-primary custom-border">Add New Item</a>
-        </p>
-
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.First().Name)</th>
-                    <th>@Html.DisplayNameFor(model => model.First().Description)</th>
-                    <th>@Html.DisplayNameFor(model => model.First().Quantity)</th>
-                    <th>@Html.DisplayNameFor(model => model.First().Price)</th>
-                    <th>@Html.DisplayNameFor(model => model.First().Value)</th>
-                    <th>@Html.DisplayNameFor(model => model.First().PurchaseDate)</th>
-                    <th>@Html.DisplayNameFor(model => model.First().Condition)</th>
-                    <th>@Html.DisplayNameFor(model => model.First().Origin)</th>
-                    <th>@Html.DisplayNameFor(model => model.First().ForSale)</th>
-                    <th>@Html.DisplayNameFor(model => model.First().ForTrade)</th>
-                    <th>@Html.DisplayName("Categories")</th>
-                    <th style="width: 200px;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    var itemQuantity = int.TryParse(item.Quantity, out int parsedQuantity) ? parsedQuantity : 0;
-                    var totalItemPrice = (item.Price ?? 0) * itemQuantity;
-
-                    <tr>
-                        <td>@(item.Name ?? "N/A")</td>
-                        <td>@item.Description</td>
-                        <td>@itemQuantity</td>
-                        <td width="100px">€ @totalItemPrice</td> <!-- Prijs aangepast op basis van Quantity -->
-                        <td width="100px">€ @item.Value</td>
-                        <td>@Html.DisplayFor(modelItem => item.PurchaseDate)</td>
-                        <td>@(item.Condition ?? "N/A")</td>
-                        <td>@(item.Origin ?? "N/A")</td>
-
-                        <!-- ForSale with icons -->
-                        <td>
-                            @if (item.ForSale.HasValue && item.ForSale.Value)
-                            {
-                                <span class="text-success"><i class="fas fa-check-circle"></i></span>
-                            }
-                            else
-                            {
-                                <span class="text-danger"><i class="fas fa-times-circle"></i></span>
-                            }
-                        </td>
-
-                        <!-- ForTrade with icons -->
-                        <td>
-                            @if (item.ForTrade.HasValue && item.ForTrade.Value)
-                            {
-                                <span class="text-success"><i class="fas fa-check-circle"></i></span>
-                            }
-                            else
-                            {
-                                <span class="text-danger"><i class="fas fa-times-circle"></i></span>
-                            }
-                        </td>
-
-                        <!-- Categorieën kolom -->
-                        <td>
-                            @if (item.Categories != null && item.Categories.Any())
-                            {
-                                @string.Join(", ", item.Categories.Select(c => c.Name))
-                            }
-                            else
-                            {
-                                <span class="text-muted">No Categories</span>
-                            }
-                        </td>
-
-                        <td>
-                            <div class="btn-group" role="group">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-custom">Edit</a>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-custom">Details</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-custom">Delete</a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <!-- Zoekformulier in een rij -->
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <form asp-action="Index" method="get" style="display: flex; align-items: center; margin-right: 20px;">
+            <label for="searchString" style="margin-right: 10px;">Search:</label>
+            <input type="text" name="searchString" class="form-control" style="width: 250px;" placeholder="Search by Name..." value="@ViewBag.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary custom-border" style="margin-left: 10px;" />
+            <a href="@Url.Action("Index")" class="btn btn-secondary custom-border" style="margin-left: 10px;">Clear</a>
+        </form>
     </div>
+
+    <!-- Sorteerformulier onder de zoekbalk -->
+    <div style="margin-bottom: 20px;">
+        <form asp-action="Index" method="get" style="display: inline-block;">
+            <input type="hidden" name="searchString" value="@ViewBag.CurrentFilter" />
+            <label for="sortOrder" style="margin-right: 10px;">Sort by:</label>
+            <select id="sortOrder" name="sortOrder" class="form-control" style="display: inline-block; width: auto;">
+                <option value="name_asc" selected>Sort by Name (A-Z)</option>
+                <option value="name_desc">Sort by Name (Z-A)</option>
+                <option value="price_asc">Sort by Price (Low to High)</option>
+                <option value="price_desc">Sort by Price (High to Low)</option>
+                <option value="date_asc">Sort by Purchase Date (Oldest First)</option>
+                <option value="date_desc">Sort by Purchase Date (Newest First)</option>
+                <option value="category_asc">Sort by Category (A-Z)</option>
+                <option value="category_desc">Sort by Category (Z-A)</option>
+            </select>
+            <input type="submit" value="Sort" class="btn btn-primary custom-border" />
+        </form>
+    </div>
+
+
+
+    <p>
+        <a asp-action="Create" class="btn btn-primary custom-border">Add New Item</a>
+    </p>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.First().Name)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Description)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Quantity)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Price)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Value)</th>
+                <th>@Html.DisplayNameFor(model => model.First().PurchaseDate)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Condition)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Origin)</th>
+                <th>@Html.DisplayNameFor(model => model.First().ForSale)</th>
+                <th>@Html.DisplayNameFor(model => model.First().ForTrade)</th>
+                <th>@Html.DisplayName("Categories")</th>
+                <th style="width: 200px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var itemQuantity = int.TryParse(item.Quantity, out int parsedQuantity) ? parsedQuantity : 0;
+                var totalItemPrice = (item.Price ?? 0) * itemQuantity;
+
+                <tr>
+                    <td>@(item.Name ?? "N/A")</td>
+                    <td>@item.Description</td>
+                    <td>@itemQuantity</td>
+                    <td width="100px">€ @totalItemPrice</td> <!-- Prijs aangepast op basis van Quantity -->
+                    <td width="100px">€ @item.Value</td>
+                    <td>@Html.DisplayFor(modelItem => item.PurchaseDate)</td>
+                    <td>@(item.Condition ?? "N/A")</td>
+                    <td>@(item.Origin ?? "N/A")</td>
+
+                    <!-- ForSale with icons -->
+                    <td>
+                        @if (item.ForSale.HasValue && item.ForSale.Value)
+                        {
+                            <span class="text-success"><i class="fas fa-check-circle"></i></span>
+                        }
+                        else
+                        {
+                            <span class="text-danger"><i class="fas fa-times-circle"></i></span>
+                        }
+                    </td>
+
+                    <!-- ForTrade with icons -->
+                    <td>
+                        @if (item.ForTrade.HasValue && item.ForTrade.Value)
+                        {
+                            <span class="text-success"><i class="fas fa-check-circle"></i></span>
+                        }
+                        else
+                        {
+                            <span class="text-danger"><i class="fas fa-times-circle"></i></span>
+                        }
+                    </td>
+
+                    <!-- Categorieën kolom -->
+                    <td>
+                        @if (item.Categories != null && item.Categories.Any())
+                        {
+                            @string.Join(", ", item.Categories.Select(c => c.Name))
+                        }
+                        else
+                        {
+                            <span class="text-muted">No Categories</span>
+                        }
+                    </td>
+
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-custom">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-custom">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-custom">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
-
-<!-- CSS for Total Summary -->
-<style>
-    .total-summary {
-        background-color: #007bff; /* Blauwe achtergrond */
-        padding: 15px;
-        border-radius: 8px;
-        border: 2px solid black; /* Zwarte border toegevoegd */
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Zacht schaduw effect */
-        text-align: right;
-        font-size: 1.1rem;
-    }
-
-    .total-summary p {
-        margin: 0; /* Geen ruimte tussen de paragrafen */
-        font-weight: bold;
-        color: #ffffff; /* Witte tekstkleur */
-        text-shadow: 1px 1px 2px black; /* Zwart randje rond de tekst */
-    }
-
-    .summary-title {
-        margin: 0;
-        font-weight: bold;
-        font-size: 1.2rem;
-        color: white;
-    }
-
-    .summary-line {
-        margin: 8px 0;
-        border: 0;
-        border-top: 1px solid white;
-    }
-
-    .text-success i {
-        color: #28a745;
-    }
-
-    .text-danger i {
-        color: #dc3545;
-    }
-</style>

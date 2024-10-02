@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using FirstMVCtest.Data;
 using FirstMVCtest.Models;
 
+
 namespace FirstMVCtest.Controllers
 {
     public class ItemsController : Controller
@@ -71,7 +72,9 @@ namespace FirstMVCtest.Controllers
             }
 
             var item = await _context.Items
+                .Include(i => i.Categories) // Zorg ervoor dat categorieën worden ingeladen
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (item == null)
             {
                 return NotFound();
@@ -79,6 +82,7 @@ namespace FirstMVCtest.Controllers
 
             return View(item);
         }
+
 
         // GET: Items/Create
         public IActionResult Create()

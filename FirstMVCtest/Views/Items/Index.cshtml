@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<FirstMVCtest.Models.Item>
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 @{
     ViewData["Title"] = "Items";
 
@@ -81,34 +83,31 @@
                         <td>@Html.DisplayFor(modelItem => item.PurchaseDate)</td>
                         <td>@(item.Condition ?? "N/A")</td>
                         <td>@(item.Origin ?? "N/A")</td>
+
+                        <!-- ForSale with icons -->
                         <td>
                             @if (item.ForSale.HasValue && item.ForSale.Value)
                             {
-                                <span class="text-success">&#10004;</span>
-                            }
-                            else if (item.ForSale.HasValue && !item.ForSale.Value)
-                            {
-                                <span class="text-danger">&#10060;</span>
+                                <span class="text-success"><i class="fas fa-check-circle"></i></span>
                             }
                             else
                             {
-                                <span class="text-muted">N/A</span>
+                                <span class="text-danger"><i class="fas fa-times-circle"></i></span>
                             }
                         </td>
+
+                        <!-- ForTrade with icons -->
                         <td>
                             @if (item.ForTrade.HasValue && item.ForTrade.Value)
                             {
-                                <span class="text-success">&#10004;</span>
-                            }
-                            else if (item.ForTrade.HasValue && !item.ForTrade.Value)
-                            {
-                                <span class="text-danger">&#10060;</span>
+                                <span class="text-success"><i class="fas fa-check-circle"></i></span>
                             }
                             else
                             {
-                                <span class="text-muted">N/A</span>
+                                <span class="text-danger"><i class="fas fa-times-circle"></i></span>
                             }
                         </td>
+
                         <!-- Categorieën kolom -->
                         <td>
                             @if (item.Categories != null && item.Categories.Any())
@@ -120,6 +119,7 @@
                                 <span class="text-muted">No Categories</span>
                             }
                         </td>
+
                         <td>
                             <div class="btn-group" role="group">
                                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-custom">Edit</a>
@@ -146,12 +146,12 @@
         font-size: 1.1rem;
     }
 
-        .total-summary p {
-            margin: 0; /* Geen ruimte tussen de paragrafen */
-            font-weight: bold;
-            color: #ffffff; /* Witte tekstkleur */
-            text-shadow: 1px 1px 2px black; /* Zwart randje rond de tekst */
-        }
+    .total-summary p {
+        margin: 0; /* Geen ruimte tussen de paragrafen */
+        font-weight: bold;
+        color: #ffffff; /* Witte tekstkleur */
+        text-shadow: 1px 1px 2px black; /* Zwart randje rond de tekst */
+    }
 
     .summary-title {
         margin: 0;
@@ -164,5 +164,13 @@
         margin: 8px 0;
         border: 0;
         border-top: 1px solid white;
+    }
+
+    .text-success i {
+        color: #28a745;
+    }
+
+    .text-danger i {
+        color: #dc3545;
     }
 </style>

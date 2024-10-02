@@ -1,78 +1,128 @@
 ﻿@model FirstMVCtest.Models.Item
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Item Details";
 }
 
-<h1>Details</h1>
+<!-- Card container for the details -->
+<div class="card shadow-lg p-4 mb-5 bg-white rounded">
+    <div class="card-header bg-primary text-white">
+        <h2>Item Details</h2>
+    </div>
 
-<div>
-    <h4>Item</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Value)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Value)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PurchaseDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PurchaseDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Condition)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Condition)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Origin)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Origin)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ForSale)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ForSale)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ForTrade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ForTrade)
-        </dd>
-    </dl>
+    <div class="card-body">
+        <!-- Grid layout for better organization -->
+        <div class="row">
+            <!-- Left column -->
+            <div class="col-md-6">
+                <h5 class="font-weight-bold">Basic Information</h5>
+                <hr>
+                <p><strong>Name:</strong> @Html.DisplayFor(model => model.Name)</p>
+                <p><strong>Description:</strong> @Html.DisplayFor(model => model.Description)</p>
+                <p><strong>Quantity:</strong> @Html.DisplayFor(model => model.Quantity)</p>
+                <p><strong>Price:</strong> € @Html.DisplayFor(model => model.Price)</p>
+                <p><strong>Value:</strong> € @Html.DisplayFor(model => model.Value)</p>
+            </div>
+
+            <!-- Right column -->
+            <div class="col-md-6">
+                <h5 class="font-weight-bold">Additional Information</h5>
+                <hr>
+                <p><strong>Purchase Date:</strong> @Html.DisplayFor(model => model.PurchaseDate)</p>
+                <p><strong>Condition:</strong> @Html.DisplayFor(model => model.Condition)</p>
+                <p><strong>Origin:</strong> @Html.DisplayFor(model => model.Origin)</p>
+
+                <!-- ForSale with icons -->
+                <p>
+                    <strong>For Sale:</strong>
+                    @if (Model.ForSale.HasValue && Model.ForSale.Value)
+                    {
+                        <span class="text-success"><i class="fas fa-check-circle"></i> </span>
+                    }
+                    else
+                    {
+                        <span class="text-danger"><i class="fas fa-times-circle"></i></span>
+                    }   
+                </p>
+
+                <!-- ForTrade with icons -->
+                <p>
+                    <strong>For Trade:</strong>
+                    @if (Model.ForTrade.HasValue && Model.ForTrade.Value)
+                    {
+                        <span class="text-success"><i class="fas fa-check-circle"></i> </span>
+                    }
+                    else
+                    {
+                        <span class="text-danger"><i class="fas fa-times-circle"></i></span>
+                    }
+                </p>
+
+                <!-- Categories -->
+                <p>
+                    <strong>Categories:</strong>
+                    @if (Model.Categories != null && Model.Categories.Any())
+                    {
+                        @string.Join(", ", Model.Categories.Select(c => c.Name))
+                    }
+                    else
+                    {
+                        <span class="text-muted">No Categories</span>
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action buttons in card footer -->
+    <div class="card-footer text-right">
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<!-- CSS for card styling -->
+<style>
+    .card {
+        border: 1px solid #007bff;
+        border-radius: 10px;
+    }
+
+    .card-header {
+        background-color: #007bff;
+        color: white;
+        padding: 15px;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+        .card-body h5 {
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+    .card-footer {
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-top: 1px solid #007bff;
+    }
+
+    .btn {
+        margin-left: 10px;
+    }
+
+    .text-success i {
+        color: #28a745;
+    }
+
+    .text-danger i {
+        color: #dc3545;
+    }
+</style>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+

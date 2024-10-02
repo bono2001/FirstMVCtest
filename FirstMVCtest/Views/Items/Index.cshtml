@@ -56,90 +56,91 @@
         </form>
     </div>
 
-
-
     <p>
         <a asp-action="Create" class="btn btn-primary custom-border">Add New Item</a>
     </p>
 
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.First().Name)</th>
-                <th>@Html.DisplayNameFor(model => model.First().Description)</th>
-                <th>@Html.DisplayNameFor(model => model.First().Quantity)</th>
-                <th>@Html.DisplayNameFor(model => model.First().Price)</th>
-                <th>@Html.DisplayNameFor(model => model.First().Value)</th>
-                <th>@Html.DisplayNameFor(model => model.First().PurchaseDate)</th>
-                <th>@Html.DisplayNameFor(model => model.First().Condition)</th>
-                <th>@Html.DisplayNameFor(model => model.First().Origin)</th>
-                <th>@Html.DisplayNameFor(model => model.First().ForSale)</th>
-                <th>@Html.DisplayNameFor(model => model.First().ForTrade)</th>
-                <th>@Html.DisplayName("Categories")</th>
-                <th style="width: 200px;">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                var itemQuantity = int.TryParse(item.Quantity, out int parsedQuantity) ? parsedQuantity : 0;
-                var totalItemPrice = (item.Price ?? 0) * itemQuantity;
-
+    <!-- Responsive Table -->
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
                 <tr>
-                    <td>@(item.Name ?? "N/A")</td>
-                    <td>@item.Description</td>
-                    <td>@itemQuantity</td>
-                    <td width="100px">€ @totalItemPrice</td> <!-- Prijs aangepast op basis van Quantity -->
-                    <td width="100px">€ @item.Value</td>
-                    <td>@Html.DisplayFor(modelItem => item.PurchaseDate)</td>
-                    <td>@(item.Condition ?? "N/A")</td>
-                    <td>@(item.Origin ?? "N/A")</td>
-
-                    <!-- ForSale with icons -->
-                    <td>
-                        @if (item.ForSale.HasValue && item.ForSale.Value)
-                        {
-                            <span class="text-success"><i class="fas fa-check-circle"></i></span>
-                        }
-                        else
-                        {
-                            <span class="text-danger"><i class="fas fa-times-circle"></i></span>
-                        }
-                    </td>
-
-                    <!-- ForTrade with icons -->
-                    <td>
-                        @if (item.ForTrade.HasValue && item.ForTrade.Value)
-                        {
-                            <span class="text-success"><i class="fas fa-check-circle"></i></span>
-                        }
-                        else
-                        {
-                            <span class="text-danger"><i class="fas fa-times-circle"></i></span>
-                        }
-                    </td>
-
-                    <!-- Categorieën kolom -->
-                    <td>
-                        @if (item.Categories != null && item.Categories.Any())
-                        {
-                            @string.Join(", ", item.Categories.Select(c => c.Name))
-                        }
-                        else
-                        {
-                            <span class="text-muted">No Categories</span>
-                        }
-                    </td>
-
-                    <td>
-                        <div class="btn-group" role="group">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-custom">Edit</a>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-custom">Details</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-custom">Delete</a>
-                        </div>
-                    </td>
+                    <th>@Html.DisplayNameFor(model => model.First().Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Description)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Quantity)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Price)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Value)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().PurchaseDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Condition)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Origin)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().ForSale)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().ForTrade)</th>
+                    <th>@Html.DisplayName("Categories")</th>
+                    <th style="width: 200px;">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    var itemQuantity = int.TryParse(item.Quantity, out int parsedQuantity) ? parsedQuantity : 0;
+                    var totalItemPrice = (item.Price ?? 0) * itemQuantity;
+
+                    <tr>
+                        <td>@(item.Name ?? "N/A")</td>
+                        <td>@item.Description</td>
+                        <td>@itemQuantity</td>
+                        <td width="100px">€ @totalItemPrice</td> <!-- Prijs aangepast op basis van Quantity -->
+                        <td width="100px">€ @item.Value</td>
+                        <td>@Html.DisplayFor(modelItem => item.PurchaseDate)</td>
+                        <td>@(item.Condition ?? "N/A")</td>
+                        <td>@(item.Origin ?? "N/A")</td>
+
+                        <!-- ForSale with icons -->
+                        <td>
+                            @if (item.ForSale.HasValue && item.ForSale.Value)
+                            {
+                                <span class="text-success"><i class="fas fa-check-circle"></i></span>
+                            }
+                            else
+                            {
+                                <span class="text-danger"><i class="fas fa-times-circle"></i></span>
+                            }
+                        </td>
+
+                        <!-- ForTrade with icons -->
+                        <td>
+                            @if (item.ForTrade.HasValue && item.ForTrade.Value)
+                            {
+                                <span class="text-success"><i class="fas fa-check-circle"></i></span>
+                            }
+                            else
+                            {
+                                <span class="text-danger"><i class="fas fa-times-circle"></i></span>
+                            }
+                        </td>
+
+                        <!-- Categorieën kolom -->
+                        <td>
+                            @if (item.Categories != null && item.Categories.Any())
+                            {
+                                @string.Join(", ", item.Categories.Select(c => c.Name))
+                            }
+                            else
+                            {
+                                <span class="text-muted">No Categories</span>
+                            }
+                        </td>
+
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-custom">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-custom">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-custom">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

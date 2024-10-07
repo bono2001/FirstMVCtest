@@ -2,7 +2,149 @@
     ViewData["Title"] = "Miel";
 }
 
+<!-- Voeg de animatie en stijlen toe voor de button -->
+<style>
+
+    button {
+        animation: wiggle 2s linear infinite;
+    }
+
+    /* Keyframes voor het wiggle-effect */
+    @@keyframes wiggle {
+        0%, 7% {
+            transform: rotateZ(0);
+        }
+
+        15% {
+            transform: rotateZ(-15deg);
+        }
+
+        20% {
+            transform: rotateZ(10deg);
+        }
+
+        25% {
+            transform: rotateZ(-10deg);
+        }
+
+        30% {
+            transform: rotateZ(6deg);
+        }
+
+        35% {
+            transform: rotateZ(-4deg);
+        }
+
+        40%, 100% {
+            transform: rotateZ(0);
+        }
+    }
+
+    body {
+        background: #000;
+    }
+
+    button {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        height: 4em;
+        width: 7em;
+        background: #444;
+        background: linear-gradient(top, #555, #333);
+        border: none;
+        border-top: 3px solid orange;
+        border-radius: 0 0 0.2em 0.2em;
+        color: #fff;
+        font-family: Helvetica, Arial, Sans-serif;
+        font-size: 1em;
+        transform-origin: 50% 5em;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out, opacity 0.5s ease-in-out;
+    }
+
+        button.growing {
+            transform: scale(1.5);
+        }
+
+        button.hidden {
+            opacity: 0;
+        }
+</style>
+
+<!-- Stijlen en animaties voor speciale effecten -->
+<style>
+    /* Zwevende hoofdtekst */
+    h1 {
+        animation: float 3s ease-in-out infinite;
+        color: #fff;
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        text-shadow: 2px 2px 5px #000;
+        position: relative;
+        transition: color 0.5s ease-in-out;
+    }
+
+        h1:hover {
+            color: #ffa500; /* Verander kleur naar oranje als eroverheen wordt gegaan */
+        }
+
+    /* Keyframes voor zwevende animatie */
+    @@keyframes float {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    body {
+        background-color: #1a1a1a;
+        color: white;
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+</style>
+
+<!-- HTML-structuur voor de speciale tab -->
 <div class="text-center">
     <h1 class="display-4">Speciale tab voor de enige echte <strong>MIEL</strong></h1>
-    <p> Nog 1 extra <strong>MIEL</strong></a>.</p>
 </div>
+
+<!-- Voeg de animated button toe -->
+<div class="text-center">
+    <button id="runButton">Click Me</button>
+</div>
+
+<!-- JavaScript om de knop weg te laten rennen -->
+<script>
+    const button = document.getElementById('runButton');
+    const messages = ["Nope!", "Try Again!", "Catch Me!", "Not today!", "Hahaha!", "Too Slow!"];
+
+    button.addEventListener('mouseover', function () {
+        // Verplaats de knop naar een willekeurige positie
+        const x = Math.random() * (window.innerWidth - button.offsetWidth);
+        const y = Math.random() * (window.innerHeight - button.offsetHeight);
+        button.style.left = `${x}px`;
+        button.style.top = `${y}px`;
+
+        // Verander de tekst naar een willekeurig grappig bericht
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        button.textContent = randomMessage;
+
+        // Voeg een groei-effect toe
+        button.classList.add('growing');
+        setTimeout(() => {
+            button.classList.remove('growing');
+        }, 500);
+    });
+
+    button.addEventListener('mouseout', function () {
+        // Laat de knop kort verdwijnen en dan weer verschijnen
+        button.classList.add('hidden');
+        setTimeout(() => {
+            button.classList.remove('hidden');
+        }, 500);
+    });
+</script>

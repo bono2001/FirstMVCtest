@@ -14,6 +14,11 @@ namespace FirstMVCtest.Data
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Collection> Collections { get; set; } = null!;
 
+        public ItemDb(DbContextOptions<ItemDb> options) : base(options)
+        {
+        }
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connection = @"Data Source=.;Initial Catalog=Collectionbox;Integrated Security=true;TrustServerCertificate=True;";

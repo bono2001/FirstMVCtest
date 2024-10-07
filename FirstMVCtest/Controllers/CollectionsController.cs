@@ -44,17 +44,28 @@ namespace FirstMVCtest.Controllers
         }
 
         // GET: Collections/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            // Controleer of er al een collectie bestaat
+            var existingCollections = await _context.Collections.ToListAsync();
+
+            if (existingCollections.Count >= 1)
+            {
+                // Als er al een collectie bestaat, stuur de gebruiker terug naar de lijst met een waarschuwing
+                TempData["Error"] = "You can only create one collection.";
+                return RedirectToAction(nameof(Index));
+            }
+
             return View();
         }
+
 
         // POST: Collections/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Collection collection)
+        public async Task<IActionResult> Create(Collection collection)
         {
             if (ModelState.IsValid)
             {
